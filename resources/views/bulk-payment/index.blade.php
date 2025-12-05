@@ -65,83 +65,109 @@
                 <h3 class="text-lg font-semibold text-gray-800">Historique des Paiements</h3>
             </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead>
-                        <tr class="text-left text-xs uppercase tracking-wide text-gray-500 bg-gray-50 border-b">
-                            <th class="py-3 px-2">Référence</th>
-                            <th class="py-3 px-2">Fichier</th>
-                            <th class="py-3 px-2 text-center">Total</th>
-                            <th class="py-3 px-2 text-green-700 text-center">Succès</th>
-                            <th class="py-3 px-2 text-red-700 text-center">Échecs</th>
-                            <th class="py-3 px-2 text-center">Statut</th>
-                            <th class="py-3 px-2 text-center">Actions</th>
-                        </tr>
-                    </thead>
+            @if ($batches->count() > 0)
 
-                    <tbody class="divide-y">
-                        @foreach ($batches as $b)
-                            <tr class="hover:bg-gray-50 transition">
-                                <td class="py-3 px-2 font-medium text-gray-800">
-                                    {{ $b->batch_reference }}
-                                </td>
-
-                                <td class="py-3 px-2 text-gray-600 truncate max-w-[150px]">
-                                    {{ $b->filename }}
-                                </td>
-
-                                <td class="py-3 px-2 text-center font-semibold text-gray-700">
-                                    {{ $b->total_records }}
-                                </td>
-
-                                <td class="py-3 px-2 text-center font-semibold text-green-600">
-                                    {{ $b->successful_payments }}
-                                </td>
-
-                                <td class="py-3 px-2 text-center font-semibold text-red-600">
-                                    {{ $b->failed_payments }}
-                                </td>
-
-                                <td class="py-3 px-2 text-center">
-                                    <span
-                                        class="px-3 py-1 rounded-full text-xs font-semibold
-                                @if ($b->status === 'completed') bg-green-100 text-green-800
-                                @elseif($b->status === 'failed')
-                                    bg-red-100 text-red-800
-                                @elseif($b->status === 'processing')
-                                    bg-blue-100 text-blue-800
-                                @elseif($b->status === 'partially_completed')
-                                    bg-yellow-100 text-yellow-900
-                                @else
-                                    bg-gray-100 text-gray-800 @endif">
-                                        {{ ucfirst(str_replace('_', ' ', $b->status)) }}
-                                    </span>
-                                </td>
-
-                                <td class="py-3 px-2 text-center">
-                                    <a href="{{ route('bulk-payment.show', $b->id) }}"
-                                        class="inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-indigo-50 text-indigo-600 transition"
-                                        title="Voir les détails">
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.21.07.43 0 .64C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                    </a>
-                                </td>
-
+                <!-- Table visible uniquement s'il y a des données -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-left text-xs uppercase tracking-wide text-gray-500 bg-gray-50 border-b">
+                                <th class="py-3 px-2">Référence</th>
+                                <th class="py-3 px-2">Fichier</th>
+                                <th class="py-3 px-2 text-center">Total</th>
+                                <th class="py-3 px-2 text-green-700 text-center">Succès</th>
+                                <th class="py-3 px-2 text-red-700 text-center">Échecs</th>
+                                <th class="py-3 px-2 text-center">Statut</th>
+                                <th class="py-3 px-2 text-center">Actions</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
 
-            <div class="mt-4">
-                {{ $batches->links() }}
-            </div>
+                        <tbody class="divide-y">
+
+                            @foreach ($batches as $b)
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="py-3 px-2 font-medium text-gray-800">
+                                        {{ $b->batch_reference }}
+                                    </td>
+
+                                    <td class="py-3 px-2 text-gray-600 truncate max-w-[150px]">
+                                        {{ $b->filename }}
+                                    </td>
+
+                                    <td class="py-3 px-2 text-center font-semibold text-gray-700">
+                                        {{ $b->total_records }}
+                                    </td>
+
+                                    <td class="py-3 px-2 text-center font-semibold text-green-600">
+                                        {{ $b->successful_payments }}
+                                    </td>
+
+                                    <td class="py-3 px-2 text-center font-semibold text-red-600">
+                                        {{ $b->failed_payments }}
+                                    </td>
+
+                                    <td class="py-3 px-2 text-center">
+                                        <span
+                                            class="px-3 py-1 rounded-full text-xs font-semibold
+                                    @if ($b->status === 'completed') bg-green-100 text-green-800
+                                    @elseif($b->status === 'failed') bg-red-100 text-red-800
+                                    @elseif($b->status === 'processing') bg-blue-100 text-blue-800
+                                    @elseif($b->status === 'partially_completed') bg-yellow-100 text-yellow-900
+                                    @else bg-gray-100 text-gray-800 @endif">
+                                            {{ ucfirst(str_replace('_', ' ', $b->status)) }}
+                                        </span>
+                                    </td>
+
+                                    <td class="py-3 px-2 text-center">
+                                        <a href="{{ route('bulk-payment.show', $b->id) }}"
+                                            class="inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-indigo-50 text-indigo-600 transition"
+                                            title="Voir les détails">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.21.07.43 0 .64C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4">
+                    {{ $batches->links() }}
+                </div>
+            @else
+                <!-- Message vide si aucun lot -->
+                <div class="py-12 text-center">
+                    <div class="flex flex-col items-center justify-center">
+
+                        <svg class="w-14 h-14 text-gray-300 mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M3 16.5v-9a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v9a2.25 2.25 0 01-2.25 2.25h-13.5A2.25 2.25 0 013 16.5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M3 7.5l9 6 9-6" />
+                        </svg>
+
+                        <p class="text-gray-700 font-medium text-lg">
+                            Aucun paiement de masse enregistré.
+                        </p>
+
+                        <p class="text-gray-500 text-sm mt-1">
+                            Les lots que vous téléverserez pour MaPension.BJ apparaîtront ici.
+                        </p>
+
+                    </div>
+                </div>
+
+            @endif
         </div>
 
     </div>
