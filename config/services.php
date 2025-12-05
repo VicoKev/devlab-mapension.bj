@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'mojaloop' => [
+        'base_url' => env('MOJALOOP_BASE_URL', 'http://localhost:4001'),
+        'payer_display_name' => env('MOJALOOP_PAYER_DISPLAY_NAME', 'MaPension.BJ'),
+        'payer_id_type' => env('MOJALOOP_PAYER_ID_TYPE', 'MSISDN'),
+        'payer_id_value' => env('MOJALOOP_PAYER_ID_VALUE', '123456789'),
+    ],
+
 ];
