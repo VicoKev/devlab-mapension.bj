@@ -25,7 +25,7 @@
     <header class="bg-gradient-to-r from-emerald-600 to-teal-600 shadow-lg">
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
-                <a href="" class="flex items-center space-x-3">
+                <a href="{{ route('landing') }}" class="flex items-center space-x-3">
                     <div class="bg-white rounded-lg p-2 shadow-md">
                         <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -80,8 +80,7 @@
                         $startYear = 2025;
                         $currentYear = date('Y');
                     @endphp
-                    &copy; {{ $startYear }} {{ $startYear != $currentYear ? ' - ' . $currentYear : '' }} MaPension.BJ
-                    - Tous droits réservés | Powered by Mojaloop</p>
+                    &copy; {{ $startYear }} {{ $startYear != $currentYear ? ' - ' . $currentYear : '' }} MaPension.BJ - Service Public de Gestion des Pensions du Bénin. Tous droits réservés | Powered by Mojaloop</p>
             </div>
         </div>
     </footer>
